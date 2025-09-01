@@ -1,4 +1,7 @@
-from django.http import HttpResponse
+from django.shortcuts import render
 
 def product_list(request):
-    return HttpResponse("📚 List of products will appear here.")
+    return render(request, "products/product_list.html")
+
+def product_detail(request, product_id):
+    return render(request, "products/product_detail.html")

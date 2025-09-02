@@ -2,8 +2,6 @@ name: Django CI
 
 on: [push, pull_request]
 
-## jobs
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -15,19 +13,18 @@ jobs:
         with:
           python-version: '3.11'
 
-          ## dependencies 
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt
-        working-directory: ./ecommerce   
+          pip install -r ../requirements.txt   # go up one level
+        working-directory: ./ecommerce         # run inside Django folder
 
       - name: Run migrations
         run: |
           python manage.py migrate --noinput
-        working-directory: ./ecommerce   
+        working-directory: ./ecommerce
 
       - name: Run tests
         run: |
           python manage.py test
-        working-directory: ./ecommerce   
+        working-directory: ./ecommerce

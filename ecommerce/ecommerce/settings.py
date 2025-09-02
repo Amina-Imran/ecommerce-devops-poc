@@ -44,10 +44,6 @@ INSTALLED_APPS = [
     'accounts',
     'core',
 
-    # Tailwind
-    'tailwind',
-    'theme',  # custom app for Tailwind
-    'django_browser_reload',
 ]
 
 MIDDLEWARE = [
@@ -131,8 +127,3 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-# Tailwind CSS setup
-TAILWIND_APP_NAME = 'theme'
-
-# Explicit path to npm
-NPM_BIN_PATH = r"C:\nvm4w\nodejs\npm.cmd"

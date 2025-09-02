@@ -1,0 +1,236 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ book.title }} - BookStore{% endblock %}
+
+{% block content %}
+<div class="container">
+    <!-- Breadcrumb Navigation -->
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/" class="text-decoration-none">Home</a></li>
+            <li class="breadcrumb-item"><a href="/books/" class="text-decoration-none">Books</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ book.title }}</li>
+        </ol>
+    </nav>
+
+    <!-- Main Product Detail Section -->
+    <div class="row g-4 mb-5">
+        <!-- Left Column - Book Image -->
+        <div class="col-md-6">
+            <div class="position-sticky" style="top: 20px;">
+                <div class="card border-0 shadow-sm">
+                    <img src="https://picsum.photos/500/600?random={{ book.id|default:1 }}" 
+                         class="card-img-top rounded" 
+                         alt="{{ book.title }}"
+                         style="height: 600px; object-fit: cover;">
+                </div>
+                
+                <!-- Additional small images (thumbnail gallery) -->
+                <div class="row mt-3 g-2">
+                    <div class="col-3">
+                        <img src="https://picsum.photos/100/120?random={{ book.id|default:1 }}" 
+                             class="img-thumbnail" 
+                             alt="Book cover"
+                             style="height: 80px; object-fit: cover; cursor: pointer;">
+                    </div>
+                    <div class="col-3">
+                        <img src="https://picsum.photos/100/120?random={{ book.id|default:2 }}" 
+                             class="img-thumbnail" 
+                             alt="Book back"
+                             style="height: 80px; object-fit: cover; cursor: pointer;">
+                    </div>
+                    <div class="col-3">
+                        <img src="https://picsum.photos/100/120?random={{ book.id|default:3 }}" 
+                             class="img-thumbnail" 
+                             alt="Book spine"
+                             style="height: 80px; object-fit: cover; cursor: pointer;">
+                    </div>
+                    <div class="col-3">
+                        <img src="https://picsum.photos/100/120?random={{ book.id|default:4 }}" 
+                             class="img-thumbnail" 
+                             alt="Book pages"
+                             style="height: 80px; object-fit: cover; cursor: pointer;">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Column - Book Details -->
+        <div class="col-md-6">
+            <div class="h-100">
+                <!-- Book Title -->
+                <h1 class="display-5 fw-bold text-dark mb-3">{{ book.title }}</h1>
+                
+                <!-- Author -->
+                <p class="text-muted fs-5 mb-3">
+                    <i class="fas fa-user-edit me-2"></i>
+                    By {{ book.author|default:"Unknown Author" }}
+                </p>
+                
+                <!-- Rating (optional) -->
+                <div class="mb-3">
+                    <span class="text-warning">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </span>
+                    <span class="text-muted ms-2">(4.5/5) • 127 reviews</span>
+                </div>
+
+                <!-- Price -->
+                <div class="mb-4">
+                    <span class="display-6 fw-bold text-success">${{ book.price }}</span>
+                    {% if book.original_price %}
+                        <span class="fs-4 text-muted text-decoration-line-through ms-2">${{ book.original_price }}</span>
+                        <span class="badge bg-danger ms-2">Sale</span>
+                    {% endif %}
+                </div>
+
+                <!-- Book Description -->
+                <div class="mb-4">
+                    <h3 class="h5 fw-semibold mb-3">Description</h3>
+                    <p class="text-muted lh-lg">
+                        {{ book.description|default:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." }}
+                    </p>
+                </div>
+
+                <!-- Book Details -->
+                <div class="mb-4">
+                    <h3 class="h5 fw-semibold mb-3">Details</h3>
+                    <div class="row text-sm">
+                        <div class="col-6">
+                            <strong>ISBN:</strong> {{ book.isbn|default:"978-0-123456-78-9" }}<br>
+                            <strong>Pages:</strong> {{ book.pages|default:"324" }}<br>
+                            <strong>Language:</strong> {{ book.language|default:"English" }}
+                        </div>
+                        <div class="col-6">
+                            <strong>Publisher:</strong> {{ book.publisher|default:"BookStore Publishing" }}<br>
+                            <strong>Publication Date:</strong> {{ book.publication_date|default:"2024" }}<br>
+                            <strong>Format:</strong> {{ book.format|default:"Paperback" }}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quantity Selector and Add to Cart -->
+                <div class="mb-4">
+                    <div class="row g-3 align-items-center">
+                        <div class="col-auto">
+                            <label for="quantity" class="form-label fw-semibold">Quantity:</label>
+                        </div>
+                        <div class="col-auto">
+                            <div class="input-group" style="width: 120px;">
+                                <button class="btn btn-outline-secondary" type="button" onclick="decreaseQuantity()">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <input type="number" class="form-control text-center" id="quantity" value="1" min="1" max="10">
+                                <button class="btn btn-outline-secondary" type="button" onclick="increaseQuantity()">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="d-grid gap-2 d-md-flex">
+                    <button type="button" class="btn btn-primary btn-lg flex-fill" onclick="addToCart()">
+                        <i class="fas fa-cart-plus me-2"></i>Add to Cart
+                    </button>
+                    <button type="button" class="btn btn-outline-danger btn-lg">
+                        <i class="fas fa-heart"></i>
+                    </button>
+                </div>
+
+                <!-- Additional Info -->
+                <div class="mt-4 p-3 bg-light rounded">
+                    <div class="row text-center">
+                        <div class="col-4">
+                            <i class="fas fa-shipping-fast text-primary fs-4 mb-2"></i>
+                            <p class="mb-0 small"><strong>Free Shipping</strong><br>Orders over $25</p>
+                        </div>
+                        <div class="col-4">
+                            <i class="fas fa-undo text-primary fs-4 mb-2"></i>
+                            <p class="mb-0 small"><strong>Easy Returns</strong><br>30 day guarantee</p>
+                        </div>
+                        <div class="col-4">
+                            <i class="fas fa-lock text-primary fs-4 mb-2"></i>
+                            <p class="mb-0 small"><strong>Secure Payment</strong><br>100% protected</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Related Books Section -->
+    <div class="row mt-5">
+        <div class="col-12">
+            <h3 class="mb-4">You might also like</h3>
+            <div class="row">
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="card h-100 shadow-sm">
+                        <img src="https://picsum.photos/300/200?random=10" class="card-img-top" style="height: 200px; object-fit: cover;">
+                        <div class="card-body">
+                            <h6 class="card-title">Related Book 1</h6>
+                            <p class="text-success fw-bold">$15.99</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="card h-100 shadow-sm">
+                        <img src="https://picsum.photos/300/200?random=11" class="card-img-top" style="height: 200px; object-fit: cover;">
+                        <div class="card-body">
+                            <h6 class="card-title">Related Book 2</h6>
+                            <p class="text-success fw-bold">$12.50</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="card h-100 shadow-sm">
+                        <img src="https://picsum.photos/300/200?random=12" class="card-img-top" style="height: 200px; object-fit: cover;">
+                        <div class="card-body">
+                            <h6 class="card-title">Related Book 3</h6>
+                            <p class="text-success fw-bold">$18.75</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="card h-100 shadow-sm">
+                        <img src="https://picsum.photos/300/200?random=13" class="card-img-top" style="height: 200px; object-fit: cover;">
+                        <div class="card-body">
+                            <h6 class="card-title">Related Book 4</h6>
+                            <p class="text-success fw-bold">$14.25</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function increaseQuantity() {
+    const quantityInput = document.getElementById('quantity');
+    const currentValue = parseInt(quantityInput.value);
+    if (currentValue < 10) {
+        quantityInput.value = currentValue + 1;
+    }
+}
+
+function decreaseQuantity() {
+    const quantityInput = document.getElementById('quantity');
+    const currentValue = parseInt(quantityInput.value);
+    if (currentValue > 1) {
+        quantityInput.value = currentValue - 1;
+    }
+}
+
+function addToCart() {
+    const quantity = document.getElementById('quantity').value;
+    alert(`Added ${quantity} book(s) to cart!`);
+    // In a real application, you would make an AJAX call here
+}
+</script>
+{% endblock %}

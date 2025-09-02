@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}Register - BookStore{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-center align-items-center" style="min-height: 70vh;">
+    <div class="card shadow-sm" style="max-width: 450px; width: 100%;">
+        <div class="card-body p-4">
+            <h3 class="text-center mb-4">Create Account</h3>
+
+            <!-- Registration Form -->
+            <form method="post">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="name" class="form-label">Name</label>
+                    <input type="text" class="form-control" id="name" name="name" required placeholder="Enter your name">
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email" name="email" required placeholder="Enter your email">
+                </div>
+                <div class="mb-3">
+                    <label for="password1" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="password1" name="password1" required placeholder="Enter your password">
+                </div>
+                <div class="mb-3">
+                    <label for="password2" class="form-label">Confirm Password</label>
+                    <input type="password" class="form-control" id="password2" name="password2" required placeholder="Confirm your password">
+                </div>
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-success">Register</button>
+                </div>
+            </form>
+
+            <!-- Login Link -->
+            <p class="text-center mt-3 mb-0">
+                Already have an account? 
+                <a href="/accounts/login/">Login here</a>
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}

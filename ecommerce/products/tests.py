@@ -9,15 +9,13 @@ class ProductModelTest(TestCase):
             name="Test Book",
             description="A sample test book",
             price=9.99,
-            stock=10
         )
         self.assertEqual(str(product), "Test Book")
         self.assertEqual(product.price, 9.99)
-        self.assertEqual(product.stock, 10)
 
 class ProductViewsTest(TestCase):
     def test_product_list_view(self):
-        response = self.client.get(reverse("product_list"))
+        response = self.client.get(reverse("products:product_list"))
         self.assertEqual(response.status_code, 200)
 
     def test_product_detail_view(self):

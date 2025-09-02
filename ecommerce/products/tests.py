@@ -15,7 +15,7 @@ class ProductModelTest(TestCase):
 
 class ProductViewsTest(TestCase):
     def test_product_list_view(self):
-        response = self.client.get(reverse("products:product_list"))
+        response = self.client.get(reverse("products:list"))
         self.assertEqual(response.status_code, 200)
 
     def test_product_detail_view(self):

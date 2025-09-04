@@ -18,6 +18,9 @@ RUN apt-get update && apt-get install -y \
 # Install dependencies
 COPY requirements.txt /app/
 
+# Switch into Django project folder
+WORKDIR /app/ecommerce
+
 # Upgrade pip and install requirements
 RUN pip install --upgrade pip setuptools wheel && \
     pip install --no-cache-dir -i https://pypi.org/simple -r requirements.txt

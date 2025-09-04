@@ -31,5 +31,5 @@ RUN python manage.py collectstatic --noinput || true
 # Expose port
 EXPOSE 8000
 
-# Replace "ecommerce" with your inner project folder name if it's different
-CMD ["gunicorn", "--chdir", "ecommerce", "ecommerce.wsgi:application", "--bind", "0.0.0.0:8000"]
+# Start server with gunicorn and auto-run migrations
+CMD ["sh", "-c", "python manage.py migrate --noinput && gunicorn --chdir ecommerce ecommerce.wsgi:application --bind 0.0.0.0:8000"]

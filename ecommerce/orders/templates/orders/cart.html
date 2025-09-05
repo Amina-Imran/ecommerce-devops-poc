@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Shopping Cart</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+  <!-- 🛒 Shopping Cart Container -->
+  <div class="max-w-6xl mx-auto px-4 py-10">
+
+    <h1 class="text-3xl font-bold mb-8">Your Shopping Cart</h1>
+
+    <!-- 🧾 Cart Table -->
+    <div class="overflow-x-auto bg-white shadow rounded-lg">
+      <table class="min-w-full text-left text-sm">
+        <thead class="bg-gray-100 border-b">
+          <tr>
+            <th class="px-6 py-4 font-medium">Book</th>
+            <th class="px-6 py-4 font-medium">Quantity</th>
+            <th class="px-6 py-4 font-medium">Price</th>
+            <th class="px-6 py-4 font-medium text-center">Remove</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <!-- 🛍️ Cart Item Row -->
+          <tr class="border-b hover:bg-gray-50">
+            <td class="px-6 py-4">The Great Adventure</td>
+            <td class="px-6 py-4">
+              <input type="number" value="1" min="1" class="w-16 px-2 py-1 border rounded-md">
+            </td>
+            <td class="px-6 py-4">$24.99</td>
+            <td class="px-6 py-4 text-center">
+              <button class="text-red-500 hover:text-red-700 font-semibold">Remove</button>
+            </td>
+          </tr>
+
+          <tr class="border-b hover:bg-gray-50">
+            <td class="px-6 py-4">Mystery of the Sea</td>
+            <td class="px-6 py-4">
+              <input type="number" value="2" min="1" class="w-16 px-2 py-1 border rounded-md">
+            </td>
+            <td class="px-6 py-4">$18.50</td>
+            <td class="px-6 py-4 text-center">
+              <button class="text-red-500 hover:text-red-700 font-semibold">Remove</button>
+            </td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 🧮 Total & Checkout -->
+    <div class="flex flex-col md:flex-row justify-between items-center mt-8 bg-white p-6 shadow rounded-lg">
+      <div class="text-xl font-semibold mb-4 md:mb-0">
+        Total: <span class="text-blue-600">$61.99</span>
+      </div>
+      <button class="bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700 transition">
+        Proceed to Checkout
+      </button>
+    </div>
+
+  </div>
+
+</body>
+</html>
